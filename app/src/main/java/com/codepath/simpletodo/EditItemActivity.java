@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.codepath.simpletodo.addItems.MainActivity;
+
 public class EditItemActivity extends Activity {
     private EditText mEtUpdateTask;
     private int mListIndex;
