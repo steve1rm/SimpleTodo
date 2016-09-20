@@ -5,4 +5,11 @@
     <string name="edit_item_below">Edit Item Below:</string>
     <string name="save">Save</string>
     <string name="header_profile">header profile</string>
+    <string name="new_task">New task</string>
+    <string name="simple_todo_title">Simple Todo</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_task">Add</string>
+    <string name="cancel_task">Cancel</string>
+    <string name="todo_title">Simple Todo</string>
+    <string name="new_task_message">Enter the Name of this Task</string>
 </resources>

@@ -35,7 +35,7 @@
                 app:layout_collapseMode="parallax" />
 
             <include
-                layout="@layout/todotoolbar" />
+                layout="@layout/todo_toolbar" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -50,9 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/ivHeaderView" />
-
     </android.support.v4.widget.NestedScrollView>
-
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabAddItem"
@@ -69,6 +67,5 @@
         app:layout_anchor="@id/appbarlayout"
         app:layout_anchorGravity="right|end|bottom"
         app:pressedTranslationZ="12dp" />
-
 
 </android.support.design.widget.CoordinatorLayout>
