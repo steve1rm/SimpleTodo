@@ -8,6 +8,10 @@ import android.widget.EditText;
 
 import com.codepath.simpletodo.R;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -17,9 +21,15 @@ import butterknife.ButterKnife;
 
 public class AdapterTodo extends RecyclerView.Adapter<AdapterTodo.TodoViewHolder> {
 
+    private List<Task> tasksList = Collections.emptyList();
+
+    public AdapterTodo() {
+        this.tasksList = new ArrayList<>();
+    }
+
     @Override
     public int getItemCount() {
-        return 0;
+        return tasksList.size();
     }
 
     @Override
@@ -31,7 +41,18 @@ public class AdapterTodo extends RecyclerView.Adapter<AdapterTodo.TodoViewHolder
 
     @Override
     public void onBindViewHolder(TodoViewHolder holder, int position) {
-        holder.mEtTaskName.setText("placeholder");
+        holder.mEtTaskName.setText(tasksList.get(position).getTaskName());
+    }
+
+    public void addNewTask(Task task) {
+        tasksList.add(task);
+        notifyItemInserted(tasksList.size() - 1);
+    }
+
+    public void deleteTask(Task task) {
+        final int position = tasksList.indexOf(task);
+        tasksList.remove(task);
+        notifyItemRemoved(position);
     }
 
     static class TodoViewHolder extends RecyclerView.ViewHolder {
@@ -39,8 +60,7 @@ public class AdapterTodo extends RecyclerView.Adapter<AdapterTodo.TodoViewHolder
 
         public TodoViewHolder(View itemView) {
             super(itemView);
-
-            ButterKnife.bind(itemView);
+            ButterKnife.bind(TodoViewHolder.this, itemView);
         }
     }
 }

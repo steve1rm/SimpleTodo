@@ -1,16 +1,22 @@
 package com.codepath.simpletodo.addItems;
 
 
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import com.codepath.simpletodo.R;
+import com.codepath.simpletodo.utils.FileOperations;
+
+import java.util.Collections;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -22,7 +28,12 @@ import butterknife.Unbinder;
 public class AddView extends Fragment implements AddNewTaskDialog.AddNewTaskDialogListener {
 
     @BindView(R.id.tbTodo) Toolbar mTbTodo;
+    @BindView(R.id.rvTasks) RecyclerView mRvTasks;
+
+    private static final String TODO_FILE = "todo.txt";
     private Unbinder mUnbinder;
+    private List<Task> tasksList = Collections.emptyList();
+    private AdapterTodo mAdapterTodo;
 
     public AddView() {
         // Required empty public constructor
@@ -41,6 +52,10 @@ public class AddView extends Fragment implements AddNewTaskDialog.AddNewTaskDial
 
         setupTodoToolbar();
 
+        /* Get any tasks from file */
+        FileOperations.readItems(getActivity().getFilesDir(), TODO_FILE);
+        setupRecyclerView();
+
         return view;
     }
 
@@ -57,10 +72,20 @@ public class AddView extends Fragment implements AddNewTaskDialog.AddNewTaskDial
         appCompatActivity.getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
+    /** Setup recyclerview */
+    public void setupRecyclerView() {
+        mAdapterTodo = new AdapterTodo();
+        LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+
+        mRvTasks.setLayoutManager(linearLayout);
+        mRvTasks.setAdapter(mAdapterTodo);
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
+        FileOperations.writeItems(getActivity().getFilesDir(), TODO_FILE, tasksList);
     }
 
     /** Show the dialog box that will allow the user to enter a new task */
@@ -71,5 +96,9 @@ public class AddView extends Fragment implements AddNewTaskDialog.AddNewTaskDial
     @Override
     public void onAddNewTaskDialog(String taskName) {
         Toast.makeText(getActivity(), "New Task: " + taskName, Toast.LENGTH_SHORT).show();
+        Task task = Task.getNewInstance();
+        task.setTaskName(taskName);
+
+        mAdapterTodo.addNewTask(task);
     }
 }
