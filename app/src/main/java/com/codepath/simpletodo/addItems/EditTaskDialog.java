@@ -25,13 +25,14 @@ public class EditTaskDialog {
         return new EditTaskDialog();
     }
 
-    public void createEditTaskDialog(final Context context, final EditTaskDialogListener editTaskDialogListener, final int position) {
+    public void createEditTaskDialog(final Context context, final EditTaskDialogListener editTaskDialogListener, final String taskName, final int position) {
         final AlertDialog builder = new AlertDialog.Builder(context, R.style.NewTaskDialog)
                 .setPositiveButton(R.string.edit_task, null)
                 .setNegativeButton(R.string.cancel_task, null)
                 .create();
 
         final EditText etNickName = new EditText(context);
+        etNickName.setText(taskName);
         builder.setView(etNickName);
         builder.setTitle(R.string.todo_title);
         builder.setMessage(context.getString(R.string.new_task_message));

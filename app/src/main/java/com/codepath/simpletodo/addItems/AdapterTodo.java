@@ -5,8 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.codepath.simpletodo.R;
+
+import org.w3c.dom.Text;
 
 import java.util.Collections;
 import java.util.List;
@@ -69,8 +72,7 @@ public class AdapterTodo extends RecyclerView.Adapter<AdapterTodo.TodoViewHolder
     }
 
     class TodoViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.etTaskName)
-        EditText mEtTaskName;
+        @BindView(R.id.etTaskName) TextView mEtTaskName;
 
         public TodoViewHolder(View itemView) {
             super(itemView);

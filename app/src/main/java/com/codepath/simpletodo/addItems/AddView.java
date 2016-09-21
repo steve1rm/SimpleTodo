@@ -104,18 +104,20 @@ public class AddView extends Fragment implements
         task.setTaskName(taskName);
 
         mAdapterTodo.addNewTask(task);
+        FileOperations.writeItems(getActivity().getFilesDir(), TODO_FILE, tasksList);
     }
 
     @Override
     public void onTaskListDelete(int position) {
         Timber.d("onTaskListDelete: " + position);
         mAdapterTodo.deleteTask(position);
+        FileOperations.writeItems(getActivity().getFilesDir(), TODO_FILE, tasksList);
     }
 
     @Override
     public void onTaskListEdit(int position) {
         Timber.d("onTaskListEdit: " + position);
-        EditTaskDialog.getNewInstance().createEditTaskDialog(getActivity(), AddView.this, position);
+        EditTaskDialog.getNewInstance().createEditTaskDialog(getActivity(), AddView.this, tasksList.get(position).getTaskName(), position);
     }
 
     @Override
@@ -124,5 +126,6 @@ public class AddView extends Fragment implements
         Task task = Task.getNewInstance();
         task.setTaskName(taskName);
         mAdapterTodo.updateTask(task, position);
+        FileOperations.writeItems(getActivity().getFilesDir(), TODO_FILE, tasksList);
     }
 }
