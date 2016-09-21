@@ -28,6 +28,7 @@ import timber.log.Timber;
  */
 public class AddView extends Fragment implements
         AddNewTaskDialog.AddNewTaskDialogListener,
+        EditTaskDialog.EditTaskDialogListener,
         AdapterTodo.TaskListListener {
 
     @BindView(R.id.tbTodo) Toolbar mTbTodo;
@@ -114,5 +115,14 @@ public class AddView extends Fragment implements
     @Override
     public void onTaskListEdit(int position) {
         Timber.d("onTaskListEdit: " + position);
+        EditTaskDialog.getNewInstance().createEditTaskDialog(getActivity(), AddView.this, position);
+    }
+
+    @Override
+    public void onEditTaskDialog(String taskName, int position) {
+        Timber.d("onEditTaskDialog: " + taskName + " position: " + position);
+        Task task = Task.getNewInstance();
+        task.setTaskName(taskName);
+        mAdapterTodo.updateTask(task, position);
     }
 }

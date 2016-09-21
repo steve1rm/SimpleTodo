@@ -15,6 +15,9 @@ import com.codepath.simpletodo.R;
  */
 
 public class EditTaskDialog {
+    public interface EditTaskDialogListener {
+        void onEditTaskDialog(String taskName, int position);
+    }
 
     private EditTaskDialog() {}
 
@@ -22,7 +25,7 @@ public class EditTaskDialog {
         return new EditTaskDialog();
     }
 
-    public void createEditTaskDialog(final Context context, final AddNewTaskDialog.AddNewTaskDialogListener addNewTaskDialogListener) {
+    public void createEditTaskDialog(final Context context, final EditTaskDialogListener editTaskDialogListener, final int position) {
         final AlertDialog builder = new AlertDialog.Builder(context, R.style.NewTaskDialog)
                 .setPositiveButton(R.string.edit_task, null)
                 .setNegativeButton(R.string.cancel_task, null)
@@ -47,7 +50,7 @@ public class EditTaskDialog {
                             Toast.makeText(context, "Enter a new task name", Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            addNewTaskDialogListener.onAddNewTaskDialog(etNickName.getText().toString());
+                            editTaskDialogListener.onEditTaskDialog(etNickName.getText().toString(), position);
                             builder.dismiss();
                         }
                     }

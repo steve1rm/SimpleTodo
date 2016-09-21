@@ -15,6 +15,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
+import static android.R.string.no;
+
 /**
  * Created by steve on 9/19/16.
  */
@@ -59,6 +61,11 @@ public class AdapterTodo extends RecyclerView.Adapter<AdapterTodo.TodoViewHolder
     public void deleteTask(int position) {
         tasksList.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public void updateTask(Task task, int position) {
+        tasksList.set(position, task);
+        notifyItemChanged(position);
     }
 
     class TodoViewHolder extends RecyclerView.ViewHolder {
