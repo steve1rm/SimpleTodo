@@ -21,11 +21,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import timber.log.Timber;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddView extends Fragment implements AddNewTaskDialog.AddNewTaskDialogListener {
+public class AddView extends Fragment implements
+        AddNewTaskDialog.AddNewTaskDialogListener,
+        AdapterTodo.TaskListListener {
 
     @BindView(R.id.tbTodo) Toolbar mTbTodo;
     @BindView(R.id.rvTasks) RecyclerView mRvTasks;
@@ -53,7 +56,7 @@ public class AddView extends Fragment implements AddNewTaskDialog.AddNewTaskDial
         setupTodoToolbar();
 
         /* Get any tasks from file */
-        FileOperations.readItems(getActivity().getFilesDir(), TODO_FILE);
+        tasksList = FileOperations.readItems(getActivity().getFilesDir(), TODO_FILE);
         setupRecyclerView();
 
         return view;
@@ -74,7 +77,7 @@ public class AddView extends Fragment implements AddNewTaskDialog.AddNewTaskDial
 
     /** Setup recyclerview */
     public void setupRecyclerView() {
-        mAdapterTodo = new AdapterTodo();
+        mAdapterTodo = new AdapterTodo(tasksList, AddView.this);
         LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
 
         mRvTasks.setLayoutManager(linearLayout);
@@ -100,5 +103,16 @@ public class AddView extends Fragment implements AddNewTaskDialog.AddNewTaskDial
         task.setTaskName(taskName);
 
         mAdapterTodo.addNewTask(task);
+    }
+
+    @Override
+    public void onTaskListDelete(int position) {
+        Timber.d("onTaskListDelete: " + position);
+        mAdapterTodo.deleteTask(position);
+    }
+
+    @Override
+    public void onTaskListEdit(int position) {
+        Timber.d("onTaskListEdit: " + position);
     }
 }

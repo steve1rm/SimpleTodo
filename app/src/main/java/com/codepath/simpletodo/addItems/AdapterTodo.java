@@ -8,12 +8,12 @@ import android.widget.EditText;
 
 import com.codepath.simpletodo.R;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 /**
  * Created by steve on 9/19/16.
@@ -21,10 +21,17 @@ import butterknife.ButterKnife;
 
 public class AdapterTodo extends RecyclerView.Adapter<AdapterTodo.TodoViewHolder> {
 
+    public interface TaskListListener {
+        void onTaskListEdit(int position);
+        void onTaskListDelete(int position);
+    }
+    private TaskListListener mTaskListListener;
+
     private List<Task> tasksList = Collections.emptyList();
 
-    public AdapterTodo() {
-        this.tasksList = new ArrayList<>();
+    public AdapterTodo(List<Task> tasksList, TaskListListener taskListListener) {
+        this.tasksList = tasksList;
+        mTaskListListener = taskListListener;
     }
 
     @Override
@@ -40,7 +47,7 @@ public class AdapterTodo extends RecyclerView.Adapter<AdapterTodo.TodoViewHolder
     }
 
     @Override
-    public void onBindViewHolder(TodoViewHolder holder, int position) {
+    public void onBindViewHolder(TodoViewHolder holder, final int position) {
         holder.mEtTaskName.setText(tasksList.get(position).getTaskName());
     }
 
@@ -49,18 +56,37 @@ public class AdapterTodo extends RecyclerView.Adapter<AdapterTodo.TodoViewHolder
         notifyItemInserted(tasksList.size() - 1);
     }
 
-    public void deleteTask(Task task) {
-        final int position = tasksList.indexOf(task);
-        tasksList.remove(task);
+    public void deleteTask(int position) {
+        tasksList.remove(position);
         notifyItemRemoved(position);
     }
 
-    static class TodoViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.etTaskName) EditText mEtTaskName;
+    class TodoViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.etTaskName)
+        EditText mEtTaskName;
 
         public TodoViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(TodoViewHolder.this, itemView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Timber.d("onclick position: " + getAdapterPosition());
+                    /* Open dialog for editing */
+                    mTaskListListener.onTaskListEdit(getAdapterPosition());
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Timber.d("onLongClick: " + getAdapterPosition());
+                    /* deletion of task */
+                    mTaskListListener.onTaskListDelete(getAdapterPosition());
+                    return true;
+                }
+            });
         }
     }
 }

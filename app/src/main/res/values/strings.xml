@@ -12,4 +12,5 @@
     <string name="cancel_task">Cancel</string>
     <string name="todo_title">Simple Todo</string>
     <string name="new_task_message">Enter the Name of this Task</string>
+    <string name="edit_task">Edit Task</string>
 </resources>
