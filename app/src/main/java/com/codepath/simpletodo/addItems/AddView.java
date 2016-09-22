@@ -1,8 +1,8 @@
 package com.codepath.simpletodo.addItems;
 
 
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import com.codepath.simpletodo.R;
 import com.codepath.simpletodo.utils.FileOperations;
 
@@ -56,8 +55,6 @@ public class AddView extends Fragment implements
 
         setupTodoToolbar();
 
-        /* Get any tasks from file */
-        tasksList = FileOperations.readItems(getActivity().getFilesDir(), TODO_FILE);
         setupRecyclerView();
 
         return view;
@@ -65,7 +62,6 @@ public class AddView extends Fragment implements
 
     @OnClick(R.id.fabAddItem)
     public void addNewTask() {
-        Toast.makeText(getActivity(), "Add new Item", Toast.LENGTH_SHORT).show();
         showAddNewTaskDialog();
     }
 
@@ -78,6 +74,9 @@ public class AddView extends Fragment implements
 
     /** Setup recyclerview */
     public void setupRecyclerView() {
+        /* Get any tasks from file */
+        tasksList = FileOperations.readItems(getActivity().getFilesDir(), TODO_FILE);
+
         mAdapterTodo = new AdapterTodo(tasksList, AddView.this);
         LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
 
@@ -99,7 +98,6 @@ public class AddView extends Fragment implements
 
     @Override
     public void onAddNewTaskDialog(String taskName) {
-        Toast.makeText(getActivity(), "New Task: " + taskName, Toast.LENGTH_SHORT).show();
         Task task = Task.getNewInstance();
         task.setTaskName(taskName);
 
