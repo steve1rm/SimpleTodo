@@ -11,23 +11,23 @@ Time spent: 2 hours spent in total
 The following **required** functionality is completed:
 
 * [X] User can **successfully add and remove items** from the todo list
-* [*] User can **tap a todo item in the list and bring up an edit screen for the todo item** and then have any changes to the text reflected in the todo list.
-* [*] User can **persist todo items** and retrieve them properly on app restart
+* [X] User can **tap a todo item in the list and bring up an edit screen for the todo item** and then have any changes to the text reflected in the todo list.
+* [X] User can **persist todo items** and retrieve them properly on app restart
 
 The following **optional** features are implemented:
 
 * [ ] Persist the todo items [into SQLite](http://guides.codepath.com/android/Persisting-Data-to-the-Device#sqlite) instead of a text file
-* [*] Improve style of the todo items in the list [using a custom adapter](http://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView)
+* [X] Improve style of the todo items in the list [using a custom adapter](http://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView)
 * [ ] Add support for completion due dates for todo items (and display within listview item)
-* [*] Use a [DialogFragment](http://guides.codepath.com/android/Using-DialogFragment) instead of new Activity for editing items
+* [X] Use a [DialogFragment](http://guides.codepath.com/android/Using-DialogFragment) instead of new Activity for editing items
 * [ ] Add support for selecting the priority of each todo item (and display in listview item)
-* [*] Tweak the style improving the UI / UX, play with colors, images or backgrounds
+* [X] Tweak the style improving the UI / UX, play with colors, images or backgrounds
 
 The following **additional** features are implemented:
 
-* [*] Added collapsable toolbar with header that includes floating action button
-* [*] Replaced the listview the more advanced recyclerview for better rendering and recyclering
-* [*] Uses Timber logging
+* [X] Added collapsable toolbar with header that includes floating action button
+* [X] Replaced the listview the more advanced recyclerview for better rendering and recyclering
+* [X] Uses Timber logging
 
 ## Video Walkthrough 
 
