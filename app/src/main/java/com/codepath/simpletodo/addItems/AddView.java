@@ -11,15 +11,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.codepath.simpletodo.R;
+import com.codepath.simpletodo.models.TodoItems;
 import com.codepath.simpletodo.utils.FileOperations;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.realm.Realm;
+import io.realm.RealmResults;
+import io.realm.exceptions.RealmException;
 import timber.log.Timber;
 
 /**
@@ -37,6 +42,7 @@ public class AddView extends Fragment implements
     private Unbinder mUnbinder;
     private List<Task> tasksList = Collections.emptyList();
     private AdapterTodo mAdapterTodo;
+    private Realm mRealm;
 
     public AddView() {
         // Required empty public constructor
@@ -82,6 +88,33 @@ public class AddView extends Fragment implements
 
         mRvTasks.setLayoutManager(linearLayout);
         mRvTasks.setAdapter(mAdapterTodo);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        mRealm = Realm.getDefaultInstance();
+
+        /* Create a realm TodoItems task */
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                TodoItems todoItems = mRealm.createObject(TodoItems.class, UUID.randomUUID().toString());
+                todoItems.setTaskName("cut the lawn");
+            }
+        });
+
+        RealmResults<TodoItems> todoItemses = mRealm.where(TodoItems.class).findAll();
+        for(TodoItems todoItem : todoItemses) {
+            Timber.d("TodoItem TaskName: %s", todoItem.getTaskName());
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mRealm.close();
     }
 
     @Override
