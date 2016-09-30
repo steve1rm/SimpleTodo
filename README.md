@@ -27,6 +27,7 @@ The following **additional** features are implemented:
 
 * [X] Added collapsable toolbar with header that includes floating action button
 * [X] Replaced the listview the more advanced recyclerview for better rendering and recyclering
+* [X] Uses Butterknife for view injection
 * [X] Uses Timber logging
 
 ## Video Walkthrough 
